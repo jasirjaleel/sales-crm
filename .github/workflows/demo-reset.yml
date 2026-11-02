@@ -1,0 +1,24 @@
+name: Reset public demo
+
+on:
+  schedule:
+    - cron: '30 20 * * *' # 2:00 am IST
+  workflow_dispatch:
+
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+    # Stays off until the demo project exists: set this repository variable to true.
+    if: vars.DEMO_ENABLED == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/seed-demo.mjs
+        env:
+          DEMO_SUPABASE_URL: ${{ secrets.DEMO_SUPABASE_URL }}
+          DEMO_SERVICE_ROLE_KEY: ${{ secrets.DEMO_SERVICE_ROLE_KEY }}
+          DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}

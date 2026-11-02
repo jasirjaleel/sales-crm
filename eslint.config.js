@@ -1,0 +1,27 @@
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist', 'playwright-report', 'test-results', 'playwright.config.js']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+    rules: {
+      // Rest destructuring is how we drop fields before saving a record.
+      'no-unused-vars': ['error', { ignoreRestSiblings: true }],
+      // Flags setLoading(true) at the start of a fetch-on-mount effect, which is harmless here.
+      'react-hooks/set-state-in-effect': 'off',
+    },
+  },
+])

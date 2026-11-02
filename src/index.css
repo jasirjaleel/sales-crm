@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* ── Core Palette (Grayscale) ── */
+  --bg-root: #0C0C0D;
+  --bg-surface: #111111;
+  --bg-surface-elevated: #161616;
+  --bg-surface-highlight: #1B1B1B;
+  
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(255, 255, 255, 0.70);
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+
+  /* ── Accents ── */
+  --accent-emerald: #064E3B;
+  --accent-emerald-hover: #065F46;
+  --accent-emerald-dim: rgba(6, 78, 59, 0.15);
+  --accent-emerald-light: #10B981;
+  
+  --success-emerald: #10B981;
+  --success-dim: rgba(16, 185, 129, 0.10);
+  
+  --danger: #EF4444;
+  --danger-dim: rgba(239, 68, 68, 0.10);
+  
+  --warning: #F59E0B;
+  --warning-dim: rgba(245, 158, 11, 0.10);
+
+  /* ── Legacy Mappings (so existing tailwind classes don't break instantly) ── */
+  --black: var(--bg-root);
+  --surface: var(--bg-surface);
+  --card: var(--bg-surface);
+  --card-solid: var(--bg-surface);
+  --border: var(--border-subtle);
+  --text: var(--text-primary);
+  --muted: var(--text-secondary);
+  --muted-light: var(--text-tertiary);
+  --accent: var(--accent-emerald);
+  --accent-light: var(--accent-emerald-hover);
+  --accent-dim: var(--accent-emerald-dim);
+  --accent-blue: var(--accent-emerald-light);
+
+  /* ── Spacing & Radius ── */
+  --radius-card: 12px;
+  --radius-button: 6px;
+  --radius-pill: 999px;
+  --bottom-nav-height: 68px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@theme {
+  --color-background: var(--bg-root);
+  --color-surface: var(--bg-surface);
+  --color-card: var(--bg-surface);
+  --color-card-solid: var(--bg-surface);
+  --color-border: var(--border-subtle);
+  --color-text: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-muted-light: var(--text-tertiary);
+  --color-accent: var(--accent-emerald);
+  --color-accent-light: var(--accent-emerald-hover);
+  --color-accent-dim: var(--accent-emerald-dim);
+  --color-success: var(--success-emerald);
+  --color-success-dim: var(--success-dim);
+  --color-danger: var(--danger);
+  --color-danger-dim: var(--danger-dim);
+  --color-warning: var(--warning);
+  --color-warning-dim: var(--warning-dim);
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Inter', ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-root);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Heading utility: italic serif ── */
+.heading-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ── UI Primitives (New Design System) ── */
+.card-primitive {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: none; /* No floating shadows */
+}
+
+.pill-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+}
+
+/* ── Legacy Class Overrides ── */
+/* Strip glass effects from legacy cards to match new flat UI */
+.glass-card, .glass-card-subtle, .glass-surface {
+  background: var(--bg-surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: none !important;
+  border-radius: var(--radius-card) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--accent-emerald);
+  color: #FFFFFF;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-button);
+  transition: background 0.15s ease-in-out;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
+  pointer-events: none;
+}
+.btn-primary:hover {
+  background: var(--accent-emerald-hover);
+  transform: none;
+}
+.btn-primary:active {
+  transform: none;
+  background: #064E3B;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-button);
+  transition: all 0.15s ease-in-out;
+}
+.btn-secondary:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-strong);
+}
+.btn-secondary:active {
+  transform: none;
+}
+
+/* Progress & Icons */
+.progress-gold {
+  background: var(--accent-emerald-light) !important;
+}
+.avatar-gold {
+  border-color: var(--border-strong) !important;
+  box-shadow: none !important;
+}
+.icon-gold, .icon-gold-fill {
+  color: var(--accent-emerald-light) !important;
+  fill: var(--accent-emerald-dim) !important;
+}
+
+/* ── Strip ambient effects ── */
+.ambient-bg {
+  background: var(--bg-root);
+}
+.warm-glow {
+  display: none !important;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Safe Area */
+.pb-safe { padding-bottom: var(--safe-bottom); }
+.pb-nav-safe { padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 16px); }
+
+/* Utilities */
+.progress-ring-circle {
+  transition: stroke-dashoffset 1s ease-out;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
